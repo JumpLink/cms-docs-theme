@@ -17,6 +17,5 @@
           h3(id="{{doc.name}}") {{doc.name}}
           div(ng-repeat="docs in doc.dox")
             h4 {{docs.ctx.name}}
-            p(ng-bind-html="docs.description.full")
-            //- p(ui-ace="{workerPath: '/assets/third-party/ace-builds/src-noconflict', mode: 'javascript'}", ng-model="docs.code")
-            div(hljs,  language="javascript", source="docs.code")
+            p(ng-if="ddocs.description.full", ng-bind-html="docs.description.full")
+            div(ng-if="docs.code", hljs,  language="javascript", source="docs.code")
