@@ -15,8 +15,8 @@ module.exports = function(grunt) {
     // 'assets/third-party/es5-shim/es5-sham.js',
   
     // //- masonry and imagesloaded
-    // 'assets/third-party/jquery/dist/jquery.js',
-    // 'assets/third-party/jquery-bridget/jquery.bridget.js',
+    'assets/third-party/jquery/dist/jquery.js',
+    'assets/third-party/jquery-bridget/jquery.bridget.js',
     // 'assets/third-party/eventEmitter/EventEmitter.js',
     // 'assets/third-party/eventie/eventie.js',
     // 'assets/third-party/imagesloaded/imagesloaded.js',
@@ -75,6 +75,10 @@ module.exports = function(grunt) {
 
     //-oh https://github.com/JumpLink/angular-toggle-switch
     'assets/third-party/angular-bootstrap-toggle-switch/angular-toggle-switch.js',
+
+    //- https://github.com/pc035860/angular-highlightjs
+    'assets/third-party/highlightjs/highlight.pack.js',
+    'assets/third-party/angular-highlightjs/build/angular-highlightjs.js',
   
     //- Bring in the socket.io client
     'assets/third-party/socket.io-client/socket.io.js',

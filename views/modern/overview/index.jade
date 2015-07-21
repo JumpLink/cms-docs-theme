@@ -18,4 +18,5 @@
           div(ng-repeat="docs in doc.dox")
             h4 {{docs.ctx.name}}
             p(ng-bind-html="docs.description.full")
-            p(ui-ace="{workerPath: '/assets/third-party/ace-builds/src-noconflict', mode: 'javascript'}", ng-model="docs.code")
+            //- p(ui-ace="{workerPath: '/assets/third-party/ace-builds/src-noconflict', mode: 'javascript'}", ng-model="docs.code")
+            div(hljs,  language="javascript", source="docs.code")
