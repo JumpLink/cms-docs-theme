@@ -1,3 +1,3 @@
-jumplink.cms.run(function(amMoment) {
-  amMoment.changeLocale('de');
-});
+// jumplink.cms.run(function(amMoment) {
+//   amMoment.changeLocale('de');
+// });

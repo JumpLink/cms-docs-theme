@@ -1,58 +1,21 @@
-#top(hidden-print, style="margin-top: -20px;width: 100%;")
-  ul(rn-carousel="", rn-carousel-auto-slide="10", style="width: 100%;")
-    li
-      img(src="/assets/images/header/1.jpg", style="width: 100%;")
-    li
-      img(src="/assets/images/header/2.jpg", style="width: 100%;")
-    li
-      img(src="/assets/images/header/3.jpg", style="width: 100%;")
-    li
-      img(src="/assets/images/header/4.jpg", style="width: 100%;")
-    li
-      img(src="/assets/images/header/5.jpg", style="width: 100%;")
 .container-fluid(style="min-height: 400px;")
   .row  
     //- Left Subnavigation visable on medium devices or larger
-    .col-md-2.hidden-xs.hidden-sm
-      .bs-sidebar(hidden-print, role="complementary", bs-affix, data-offset-top="-50")
+    .col-md-2.hidden-sm.hidden-xs
+      .bs-sidebar(hidden-print, role="complementary", data-offset-top="-50", bs-affix)
         ul.nav.bs-sidenav
-          li(ng-repeat="nav in navs", ng-if="nav.target && nav.name", data-target="{{'#'+nav.target}}", bs-scrollspy, data-offset="70")
-            a(ng-click="goTo(nav.target)") {{nav.name}}
-        button.btn.btn-warning.pull-right(ng-if="authenticated", ng-click="editNavs(navs)", title="Navigation bearbeiten"): i.fa.fa-edit
-    .col-md-8
-      h1.page-header Startseite
-      //- Events visable on small devices or smaller
-      .hidden-lg.hidden-md
-        .panel.panel-primary(style="margin-top: 40px;")
-          .panel-heading
-            h3.panel-title.text-center Aktuelles
-          .panel-body
-            div(ng-show="html && authenticated", ng-model="news.content", ui-ace="{workerPath: '/assets/third-party/ace-builds/src-noconflict', mode: 'html'}")
-            div(ng-show="authenticated", medium-editor, ng-model="news.content", options='{"placeholder": "Optionale News hier eingeben", "buttonLabels": "fontawesome", "buttons": ["bold", "italic", "underline", "anchor", "header1" , "header2", "quote", "orderedlist", "unorderedlist"]}', bind-options="mediumBindOptions")
-            div(ng-bind-html="news.content", ng-hide="authenticated")
-            div(ng-if="events.after.length <= 0")
-              | Keine bevorstehenden Veranstaltungen
-          ul.list-group(ng-if="events.after.length > 0")
-            li.list-group-item(ng-repeat="event in events.after | orderBy:'from'")
-              a(ng-href="#/events\#{{event.name}}") {{event.title}}
-              small  am {{event.from | amDateFormat:'DD.MM.YY'}} um {{event.from | amDateFormat:'HH:mm'}} Uhr {{event.subtext}}
-      div(ng-repeat="controller in controllers")
-        h2.page-header {{controller.dox.name}}
-        div(ng-repeat="docs in controller.dox")
-          h2.page-header {{docs.ctx.name}}
-          div(ng-bind-html="docs.description.full")
-    //- Events visable on medium devices or larger
-    .col-md-2.hidden-xs.hidden-sm
-      .panel.panel-primary(bs-affix, data-offset-top="-50", style="margin-top: 40px;")
-        .panel-heading
-          h3.panel-title.text-center Aktuelles
-        .panel-body
-          div(ng-show="authenticated", medium-editor, ng-model="news.content", options='{"placeholder": "Optionale News hier eingeben", "buttonLabels": "fontawesome", "buttons": ["bold", "italic", "underline", "anchor", "header1" , "header2", "quote", "orderedlist", "unorderedlist"]}', bind-options="mediumBindOptions")
-          div(ng-bind-html="news.content", ng-hide="authenticated")
-          div(ng-if="events.after.length <= 0")
-            | Keine bevorstehenden Veranstaltungen
-        ul.list-group(ng-if="events.after.length > 0")
-          li.list-group-item(ng-repeat="event in events.after | orderBy:'from'")
-            a(ng-href="#/events\#{{event.name}}") {{event.title}}
-            small  am {{event.from | amDateFormat:'DD.MM.YY'}} um {{event.from | amDateFormat:'HH:mm'}} Uhr {{event.subtext}}
-adminbar(data-add="addContent", data-download="download", data-refresh="refresh", data-toogle-html="toogleHtml", data-save="save")
+          li(ng-repeat="availableDoc in availableDocs", data-target="{{'#'+availableDoc}}", bs-scrollspy, data-offset="70")
+            a(ng-click="goTo(availableDoc)") {{availableDoc}}
+            ul.nav
+              li(ng-repeat="doc in  docs[availableDoc]", data-target="{{'#'+doc.name}}", bs-scrollspy, data-offset="70")
+                a(ng-click="goTo(doc.name)") {{doc.name}}
+    .col-md-10
+      h1.page-header Overview
+      div(ng-repeat="availableDoc in availableDocs")
+        h2.page-header(id="{{availableDoc}}") {{availableDoc}}
+        div(ng-repeat="doc in docs[availableDoc]")
+          h3(id="{{doc.name}}") {{doc.name}}
+          div(ng-repeat="docs in doc.dox")
+            h4 {{docs.ctx.name}}
+            p(ng-bind-html="docs.description.full")
+            p(ui-ace="{workerPath: '/assets/third-party/ace-builds/src-noconflict', mode: 'javascript'}", ng-model="docs.code")
