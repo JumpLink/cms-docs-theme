@@ -1,0 +1,23 @@
+extends ../layout.jade
+block body
+  include ../toolbar.jade
+  #top(style="margin-top: -20px;width: 100%;")
+    img.img-responsive(src="/assets/images/header/slideshow.gif", width="100%")
+  .container-fluid(style="min-height: 400px;")
+    .row
+      //- Left Subnavigation visable on medium devices or larger
+      include ../subnavigation.jade
+      //- Main Content
+      .col-md-8
+        h1.page-header Startseite
+        //- Events visable on small devices or smaller
+        .hidden-lg.hidden-md
+          include ../events/panel.jade
+        each content in contents
+          h2.anchor-static-navbar(id="#{content.name}")
+          h2.page-header #{content.title}
+          div!= content.content
+      //- Events visable on medium devices or larger
+      .col-md-2.hidden-xs.hidden-sm
+        include ../events/panel.jade
+  include ../footer.jade

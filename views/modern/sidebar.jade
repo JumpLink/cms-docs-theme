@@ -1,0 +1,10 @@
+.aside(tabindex='-1', role='dialog')
+  .aside-dialog
+    .aside-content
+      .aside-header(ng-show='title')
+        button.close(type='button', ng-click='$hide()') ×
+        h4.aside-title(ng-bind='title')
+      .aside-body.bs-sidebar(bs-navbar)
+        ul.nav.bs-sidenav
+          li(data-match-route='/*overview*')
+            a(ui-sref='layout.overview') Overview

@@ -1,0 +1,40 @@
+doctype html
+html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$root.authenticated = #{authenticated}; $root.user = #{user}; $root.debug = false")
+  head
+    base(href="/")
+    title Nautischer Verein Cuxhaven
+
+    //- Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
+    if force != 'modern'
+      noscript
+        meta(http-equiv="refresh" content="0; url="+url+"?force=noscript")
+    //- Stylesheets
+    link(href='/assets/styles/app.css', rel='stylesheet')
+
+    //- Templates
+    //- general
+    script(type="text/ng-template", id="layout"): include ./layout.jade
+    script(type="text/ng-template", id="toolbar"): include ./toolbar.jade
+    script(type="text/ng-template", id="footer"): include ./footer.jade
+    script(type="text/ng-template", id="sidebar"): include ./sidebar.jade
+    script(type="text/ng-template", id="adminbar"): include ./adminbar.jade
+    //- overwiew
+    script(type="text/ng-template", id="home/index"): include ./overview/index.jade
+    //- CMS
+    script(type="text/ng-template", id="cms/index"): include ./cms/index.jade
+  body(ng-class="bodyclass")
+    script.
+      var environment = '#{config.environment}';
+    if force != 'modern'
+      noscript
+        div(style="padding: 40px 15px;text-align: center;")
+          h1 Sie haben JavaScript deaktivert.
+          a.btn.btn-primary.btn-lg(href="https://"+url+"?force=noscript") Kompatiblitätsmodus aktivieren
+    span(ui-view)
+    // SCRIPTS
+    if config.environment == 'development'
+      script(type="text/javascript", charset="utf-8", src="assets/js/app.concat.js")
+    else
+      script(type="text/javascript", charset="utf-8", src="assets/js/app.min.js")
+    // SCRIPTS END
