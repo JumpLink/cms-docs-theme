@@ -119,27 +119,14 @@ jumplink.cms.config( function($stateProvider, $urlRouterProvider, $locationProvi
   .state('layout.overview', {
     url: '/overview'
     , resolve:{
-      navs: function(SubnavigationService) {
-        var statename = 'layout.overview';
-        return SubnavigationService.resolve(statename);
-      },
-      contents: function(ContentService) {
-        var statename = 'layout.overview';
-        return ContentService.resolveAll(statename, 'dynamic');
-      },
-      news: function(ContentService) {
-        var statename = 'layout.overview';
-        return ContentService.resolveOne(statename, 'news', 'fix');
-      },
-      events: function(EventService) {
-        var statename = 'layout.overview';
-        return EventService.resolve(statename);
+      controllers: function(DocsService) {
+        return DocsService.resolve('controllers');
       }
     }
     , views: {
       'content' : {
         templateUrl: 'overview/index'
-        , controller: 'HomeContentController'
+        , controller: 'DocsOverviewController'
       }
       , 'toolbar' : {
         templateUrl: 'toolbar'

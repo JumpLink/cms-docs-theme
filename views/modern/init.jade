@@ -2,7 +2,7 @@ doctype html
 html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$root.authenticated = #{authenticated}; $root.user = #{user}; $root.debug = false")
   head
     base(href="/")
-    title Nautischer Verein Cuxhaven
+    title jumplink CMS Documentation
 
     //- Viewport mobile tag for sensible mobile support
     meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
@@ -20,7 +20,7 @@ html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$
     script(type="text/ng-template", id="sidebar"): include ./sidebar.jade
     script(type="text/ng-template", id="adminbar"): include ./adminbar.jade
     //- overwiew
-    script(type="text/ng-template", id="home/index"): include ./overview/index.jade
+    script(type="text/ng-template", id="overview/index"): include ./overview/index.jade
     //- CMS
     script(type="text/ng-template", id="cms/index"): include ./cms/index.jade
   body(ng-class="bodyclass")
