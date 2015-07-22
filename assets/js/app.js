@@ -120,20 +120,41 @@ jumplink.cms.config( function($stateProvider, $urlRouterProvider, $locationProvi
   .state('layout.overview', {
     url: '/overview'
     , resolve:{
+      config: function(DocsService) {
+        return DocsService.resolve('config');
+      },
       controllers: function(DocsService) {
         return DocsService.resolve('controllers');
       },
-      models: function(DocsService) {
-        return DocsService.resolve('models');
+      policies: function(DocsService) {
+        return DocsService.resolve('policies');
       },
       services: function(DocsService) {
         return DocsService.resolve('services');
       },
+      adapters: function(DocsService) {
+        return DocsService.resolve('adapters');
+      },
+      models: function(DocsService) {
+        return DocsService.resolve('models');
+      },
+      hooks: function(DocsService) {
+        return DocsService.resolve('hooks');
+      },
+      blueprints: function(DocsService) {
+        return DocsService.resolve('blueprints');
+      },
       responses: function(DocsService) {
         return DocsService.resolve('responses');
       },
+      views: function(DocsService) {
+        return DocsService.resolve('views');
+      },
       available: function(DocsService) {
         return DocsService.resolve('available');
+      },
+      cms: function(CmsService, $log) {
+        return CmsService.infoUser();
       },
     }
     , views: {

@@ -17,8 +17,8 @@ jumplink.cms.service('DocsService', function ($rootScope, $log, $sailsSocket, $f
       }
     }, function error (resp){
       $log.error(errors[0], resp);
-      if(cb) cb(errors[0], resp);
-      else return resp;
+      if(cb) cb(errors[0], {});
+      else return {};
     });
   };
 
