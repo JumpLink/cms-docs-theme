@@ -8,7 +8,7 @@
             a(ng-click="goTo(availableDoc)") {{availableDoc}}
             ul.nav
               li(ng-repeat="doc in  docs[availableDoc] track by $index", data-target="{{'#'+availableDoc+'_'+doc.name}}", bs-scrollspy, data-offset="70")
-                a(ng-click="goTo(doc.name)") {{doc.name}}
+                a(ng-click="goTo(availableDoc+'_'+doc.name)") {{doc.name}}
     .col-md-10
       h1.page-header Overview
       div(ng-repeat="availableDoc in availableDocs track by $index")
