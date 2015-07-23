@@ -9,8 +9,8 @@ span.btn.btn-primary.navbar-btn.navbar-left.hidden-lg.hidden-md.navbar-btn-legac
         i.fa.fa-bars
       a.navbar-brand(href= force != null ? '/fallback/overview?force='+force : '/fallback/overview')
         img(src="/assets/images/logo_small.svg", style="height: 40px;margin-top:-10px;float:left;padding-right:5px;")
-        span.hidden-xs.hidden-md.hidden-lg Nautischer Verein Cuxhaven e.V.
-        span.hidden-sm.hidden-md.hidden-lg NVC e.V.
+        //- span.hidden-xs.hidden-md.hidden-lg #{title}
+        //- span.hidden-sm.hidden-md.hidden-lg #{title}
     ul.nav.navbar-nav.navbar-left.visible-md-block.hidden-xs.hidden-sm.visible-lg-block
       li(class= url == "/fallback/overview" ? "active" : "")
         a(href= force != null ? '/fallback/overview?force='+force : '/fallback/overview') Overwiev
