@@ -7,23 +7,17 @@
           img.img-responsive.center-block(src="/assets/images/logo.svg")
         .col-sm-6
           dl.dl-horizontal
-            dt: | Anschrift
-            dd
-              address
-                strong
-                  | Nautischer Verein Cuxhaven e.V.
-                br
-                | Kapitän­-Alexander­-Str. 40
-                br
-                | 27472 Cuxhaven
-            dt Telefon
-            dd: a(href="tel:+494721201620") 04721­ 201620
-            dt Fax
-            dd: a(href="fax:+494721201621") 04721­ 201621
-            dt E-Mail
-            dd: a(href="mailto:nvcux@t­online.de") nvcux@t­-online.de
-            dt CMS
-            dd: a(href=force != null ? '/fallback/cms?force='+force : '/fallback/cms') JumpLink CMS
-          dl.dl-horizontal
-            dt Extras
-            dd: a(href="/?force=modern") Modernen Modus erzwingen
+            dt Web
+            dd: a(href="http://jumplink.eu") jumplink.eu
+            //- dt Version
+            //- dd v{{cms.version}}
+            dt Technik &amp; Design
+            dd: a(href="mailto:pascal@jumplink.eu") Pascal Garber
+            //- dt Runtime
+            //- dd {{cms.runtime.title}} {{cms.runtime.version}}
+            //- dt License
+            //- dd {{cms.license}}
+            //- dt Environment
+            //- dd {{cms.config.environment}}
+            //- dt Port
+            //- dd {{cms.config.port}}
