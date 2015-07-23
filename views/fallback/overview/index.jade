@@ -4,16 +4,8 @@ block body
   .container-fluid(style="min-height: 400px;")
     .row
       //- Left Subnavigation visable on medium devices or larger
-      .col-md-2.hidden-sm.hidden-xs
-        .bs-sidebar(hidden-print, role="complementary")
-          ul.nav.bs-sidenav
-            each docsFolder in docs
-              li
-                a(href="\##{docsFolder.name}") #{docsFolder.name}
-                ul.nav(style="display: block;")
-                  each doc in docsFolder.docs
-                    li
-                      a(href="\##{docsFolder.name+'_'+doc.name}") #{doc.name}
+      .col-md-2
+        include subnavigation.jade
       //- Main Content
       .col-md-10
         h1.page-header Overview
