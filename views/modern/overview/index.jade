@@ -7,9 +7,9 @@
           li(ng-repeat="availableDoc in availableDocs track by $index", data-target="{{'#'+availableDoc}}", bs-scrollspy, data-offset="70")
             a(ng-click="goTo(availableDoc)") {{availableDoc}}
             ul.nav
-              li(ng-repeat="doc in  docs[availableDoc] track by $index", data-target="{{'#'+availableDoc+'_'+doc.name}}", bs-scrollspy, data-offset="70")
+              li(ng-repeat="doc in docs[availableDoc] track by $index", data-target="{{'#'+availableDoc+'_'+doc.name}}", bs-scrollspy, data-offset="70")
                 a(ng-click="goTo(availableDoc+'_'+doc.name)") {{doc.name}}
-    .col-md-10
+    .col-md-10(ng-init="highlight = true")
       h1.page-header Overview
       div(ng-repeat="availableDoc in availableDocs track by $index")
         h2.page-header(id="{{availableDoc}}") {{availableDoc}}
@@ -18,4 +18,103 @@
           div(ng-repeat="docDesc in doc.dox")
             h4 {{docDesc.ctx.name}}
             p(ng-if="docDesc.description.full", ng-bind-html="docDesc.description.full")
-            div(ng-if="docDesc.code", hljs, language="javascript", source="docDesc.code")
+            span(ng-if="docDesc.tags", ng-repeat="tag in docDesc.tags track by $index", ng-switch="tag.type")
+              //- uncomment for debugin tags
+              //- {{tag}} 
+              //- Dox tags for information, see: 
+              //-  * https://github.com/tj/dox#tags
+              //-  * https://code.google.com/p/jsdoc-toolkit/wiki/TagReference
+              span(ng-switch-when="help")
+              span(ng-switch-when="param")
+              span(ng-switch-when="return")
+              span(ng-switch-when="api")
+              //- Indicate this class uses another class as its "base." 
+              span(ng-switch-when="augments")
+              //- Indicate the author of the code being documented.
+              span(ng-switch-when="author")
+              //- Deprecated synonym for @param.
+              span(ng-switch-when="argument")
+              //- that as this - Document that class's member as if it were a member of this class.
+              span(ng-switch-when="borrows")
+              //- Provide a description of the class (versus the constructor).
+              span(ng-switch-when="class")
+              //- Indicate that a variable's value is a constant.
+              span(ng-switch-when="constant")
+              //- Identify a function is a constructor.
+              span(ng-switch-when="constructor")
+              //- - Identicate that a lent function will be used as a constructor.
+              span(ng-switch-when="constructs")
+              //- - Describe the default value of a variable.
+              span(ng-switch-when="default")
+              //- Indicate use of a variable is no longer supported.
+              span(ng-switch-when="deprecated")
+              //- Provide a description (synonym for an untagged first-line).
+              span(ng-switch-when="description")
+                p(ng-bind-html="tag.html")
+              //- Describe an event handled by a class.
+              span(ng-switch-when="event")
+              //- Provide a small code example, illustrating usage.
+              span(ng-switch-when="example")
+              //- Synonym for @augments.
+              span(ng-switch-when="extends")
+              //- Indicate that the variable refers to a non-function.
+              span(ng-switch-when="field")
+              //- Provides information about the entire file.
+              span(ng-switch-when="fileOverview")
+              //- Indicate that the variable refers to a function.
+              span(ng-switch-when="function")
+              //- Indicate JsDoc Toolkit should ignore the variable.
+              span(ng-switch-when="ignore")
+              //- Indicate that the variable refers to an inner function (and so is also @private).
+              span(ng-switch-when="inner")
+              //- Document that all an object literal's members are members of a given class.
+              span(ng-switch-when="lends")
+              //- TODO {@link ...} - Like @see but can be used within the text of other tags.
+              //- Document that this variable refers to a member of a given class.
+              span(ng-switch-when="memberOf")
+              //- Force JsDoc Toolkit to ignore the surrounding code and use the given variable name instead.
+              span(ng-switch-when="name")
+              //- Document an object literal is being used as a "namespace."
+              span(ng-switch-when="namespace")
+              //- Describe a function's parameter.
+              span(ng-switch-when="param")
+                p {{tag.name}} 
+                  span(ng-if="tag.types.length <= 0")
+                  span(ng-if="tag.types.length == 1")
+                    | must be from the type 
+                    code {{tag.types[0]}}
+                  span(ng-if="tag.types.length > 1")
+                    | can be one of the types 
+                    code(ng-repeat="type in tag.types") {{type}}, 
+              //- Indicate a variable is private (use the -p command line option to include these).
+              span(ng-switch-when="private")
+              //- Document a property of a class from within the constructor's doclet.
+              span(ng-switch-when="property")
+              //- Indicate an inner variable is public.
+              span(ng-switch-when="public")
+              //- Describe a required resource.
+              span(ng-switch-when="requires")
+              //- Describe the return value of a function.
+              span(ng-switch-when="returns")
+              //- Describe a related resource.
+              span(ng-switch-when="see")
+                //- {{tag}}
+                p See also: 
+                p(ng-bind-html="tag.html")
+              //- Indicate that a feature has only been available on and after a certain version number.
+              span(ng-switch-when="since")
+              //- Indicate that accessing the variable does not require instantiation of its parent.
+              span(ng-switch-when="static")
+              //- Describe the exception that a function might throw.
+              span(ng-switch-when="throws")
+              //- Describe the expected type of a variable's value or the value returned by a function.
+              span(ng-switch-when="type")
+              //- Indicate the release version of this code.
+              span(ng-switch-when="version")
+            //- Onlx show code block if it is set
+            span(ng-if="docDesc.code")
+              //- with syntax highlighting
+              div(ng-if="highlight", hljs, language="javascript", source="docDesc.code")
+              //- without syntax highlighting
+              pre(ng-if="!highlight")
+                code {{docDesc.code}}

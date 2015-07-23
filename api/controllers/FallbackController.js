@@ -8,33 +8,32 @@ var updateBrowser = function (req, res, next, force) {
 
 var fallbackOverview = function (req, res, next, force, showLegacyToast) {
   sails.log.debug("fallbackOverview");
-  var about = null, goals = null, page = 'layout.home', events;
+  var page = 'layout.overview';
   MultisiteService.getCurrentSiteConfig(req.session.uri.host, function (err, config) {
     if(err) { return res.serverError(err); }
-    Navigation.find({where:{page:page, site:config.name}, sort: 'position'}).exec(function found(err, navs) {
+    DocsService.parseAll(function (err, jsDocObjs) {
       if(err) { return res.serverError(err); }
-      Content.findOne({where:{page:page, name: 'news', site:config.name, type: 'fix'}}).exec(function found(err, news) {
-        if(err) { return res.serverError(err); }
-        Content.find({where:{page:page, site:config.name, type: 'dynamic'}, sort: 'position'}).exec(function found(err, contents) {
-          if(err) { return res.serverError(err); }
-          Timeline.find({site:config.name}).exec(function found(err, results) {
-            if(err) { return res.serverError(err); }
-            // sails.log.debug(results);
-            events = EventService.transform(results);
-            return ThemeService.view(req, 'views/fallback/home/content.jade', res, {showLegacyToast: showLegacyToast, force: force, host: req.host, url: req.path, contents: contents, news:news, events:events, useragent: req.useragent, title: 'Nautischer Verein Cuxhaven e.V. - Startseite', config: {paths: sails.config.paths}, navs: navs});
-          });
-        });
+      // sails.log.debug(jsDocObjs);
+      return ThemeService.view(req, 'views/fallback/overview/index.jade', res, {
+        showLegacyToast: showLegacyToast,
+        force: force,
+        host: req.host,
+        url: req.path,
+        docs: jsDocObjs,
+        useragent: req.useragent,
+        title: 'JumpLink CMS Documentation',
+        config: {paths: sails.config.paths}
       });
     });
   });
-}
+};
 
 var fallbackCms = function (req, res, next, force, showLegacyToast) {
   var links = null;
   MultisiteService.getCurrentSiteConfig(req.session.uri.host, function (err, config) {
     if(err) { return res.serverError(err); }
     CmsService.infoUser(function (error, cmsInfo) {
-      return ThemeService.view(req, 'views/fallback/cms/content.jade', res, {showLegacyToast: showLegacyToast, force: force, host: req.host, url: req.path, links: links, useragent: req.useragent, title: 'Nautischer Verein Cuxhaven e.V. - Links', config: {paths: sails.config.paths}, cmsInfo: cmsInfo});
+      return ThemeService.view(req, 'views/fallback/cms/index.jade', res, {showLegacyToast: showLegacyToast, force: force, host: req.host, url: req.path, links: links, useragent: req.useragent, title: 'Nautischer Verein Cuxhaven e.V. - Links', config: {paths: sails.config.paths}, cmsInfo: cmsInfo});
     });
   });
 }

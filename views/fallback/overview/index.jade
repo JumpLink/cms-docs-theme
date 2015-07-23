@@ -1,23 +1,38 @@
 extends ../layout.jade
 block body
   include ../toolbar.jade
-  #top(style="margin-top: -20px;width: 100%;")
-    img.img-responsive(src="/assets/images/header/slideshow.gif", width="100%")
   .container-fluid(style="min-height: 400px;")
     .row
       //- Left Subnavigation visable on medium devices or larger
-      include ../subnavigation.jade
+      .col-md-2.hidden-sm.hidden-xs
+        .bs-sidebar(hidden-print, role="complementary")
+          ul.nav.bs-sidenav
+            each docsFolder in docs
+              li
+                a(href="\##{docsFolder.name}") #{docsFolder.name}
+                ul.nav(style="display: block;")
+                  each doc in docsFolder.docs
+                    li
+                      a(href="\##{docsFolder.name+'_'+doc.name}") #{doc.name}
       //- Main Content
-      .col-md-8
-        h1.page-header Startseite
-        //- Events visable on small devices or smaller
-        .hidden-lg.hidden-md
-          include ../events/panel.jade
-        each content in contents
-          h2.anchor-static-navbar(id="#{content.name}")
-          h2.page-header #{content.title}
-          div!= content.content
-      //- Events visable on medium devices or larger
-      .col-md-2.hidden-xs.hidden-sm
-        include ../events/panel.jade
+      .col-md-10
+        h1.page-header Overview
+        each docsFolder in docs
+          h2.anchor-static-navbar(id="#{docsFolder.name}")
+          h2.page-header #{docsFolder.name}
+          each doc in docsFolder.docs
+            h2.anchor-static-navbar(id="#{docsFolder.name+'_'+doc.name}")
+            h3 #{doc.name}
+            each docDesc in doc.dox
+              if docDesc.ctx
+                h4 #{docDesc.ctx.name}
+              p!= docDesc.description.full  
+              pre
+                code:= docDesc.code
+              //- Dox tags for information, see: 
+              //-  * https://github.com/tj/dox#tags
+              //-  * https://code.google.com/p/jsdoc-toolkit/wiki/TagReference
+              each tag in docDesc.tags
+                //- uncomment for debugin tags
+                //- #{tag}}
   include ../footer.jade
