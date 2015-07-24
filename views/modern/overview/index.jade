@@ -4,17 +4,17 @@
     .col-md-2.hidden-sm.hidden-xs
       .bs-sidebar(hidden-print, role="complementary", data-offset-top="-50", bs-affix)
         ul.nav.bs-sidenav
-          li(ng-repeat="availableDoc in availableDocs track by $index", data-target="{{'#'+availableDoc}}", bs-scrollspy, data-offset="70")
-            a(ng-click="goTo(availableDoc)") {{availableDoc}}
+          li(ng-repeat="docsFolder in docs track by $index", data-target="{{'#'+docsFolder.name}}", bs-scrollspy, data-offset="70")
+            a(ng-if="docsFolder.docs.length > 0", ng-click="goTo(docsFolder.name)") {{docsFolder.name}}
             ul.nav
-              li(ng-repeat="doc in docs[availableDoc] track by $index", data-target="{{'#'+availableDoc+'_'+doc.name}}", bs-scrollspy, data-offset="70")
-                a(ng-click="goTo(availableDoc+'_'+doc.name)") {{doc.name}}
-    .col-md-10(ng-init="highlight = true")
+              li(ng-repeat="doc in docsFolder.docs track by $index", data-target="{{'#'+docsFolder.name+'_'+doc.name}}", bs-scrollspy, data-offset="70")
+                a(ng-click="goTo(docsFolder.name+'_'+doc.name)") {{doc.name}}
+    .col-md-10
       h1.page-header Overview
-      div(ng-repeat="availableDoc in availableDocs track by $index")
-        h2.page-header(id="{{availableDoc}}") {{availableDoc}}
-        div(ng-repeat="doc in docs[availableDoc] track by $index")
-          h3(id="{{availableDoc+'_'+doc.name}}") {{doc.name}}
+      div(ng-repeat="docsFolder in docs track by $index | orderBy:'docsFolder.name'")
+        h2.page-header(ng-if="docsFolder.docs.length > 0", id="{{docsFolder.name}}") {{docsFolder.name}}
+        div(ng-repeat="doc in docsFolder.docs track by $index")
+          h3(id="{{docsFolder.name+'_'+doc.name}}") {{doc.name}}
           div(ng-repeat="docDesc in doc.dox")
             h4 {{docDesc.ctx.name}}
             p(ng-if="docDesc.description.full", ng-bind-html="docDesc.description.full")
@@ -112,9 +112,10 @@
               //- Indicate the release version of this code.
               span(ng-switch-when="version")
             //- Onlx show code block if it is set
-            span(ng-if="docDesc.code")
+            span(ng-if="docDesc.code && $root.code")
               //- with syntax highlighting
-              div(ng-if="highlight", hljs, language="javascript", source="docDesc.code")
+              div(ng-if="$root.highlight", hljs, language="javascript", source="docDesc.code")
               //- without syntax highlighting
-              pre(ng-if="!highlight")
-                code {{docDesc.code}}
+              pre(ng-if="!$root.highlight")
+                //- same class like the highlighting stuff for uniform appearance
+                code.hljs.kotlin.javascript {{docDesc.code}}

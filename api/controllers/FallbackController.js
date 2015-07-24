@@ -11,7 +11,7 @@ var fallbackOverview = function (req, res, next, force, showLegacyToast) {
   var page = 'layout.overview';
   MultisiteService.getCurrentSiteConfig(req.session.uri.host, function (err, config) {
     if(err) { return res.serverError(err); }
-    DocsService.parseAll(function (err, jsDocObjs) {
+    DocsService.parseAll({highlight: true, lang: 'javascript'},function (err, jsDocObjs) {
       if(err) { return res.serverError(err); }
       // sails.log.debug(jsDocObjs);
       return ThemeService.view(req, 'views/fallback/overview/index.jade', res, {

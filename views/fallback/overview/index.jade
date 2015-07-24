@@ -19,8 +19,9 @@ block body
               if docDesc.ctx
                 h4 #{docDesc.ctx.name}
               p!= docDesc.description.full  
-              pre
-                code:= docDesc.code
+              if docDesc.code
+                pre
+                  code!= docDesc.code
               //- Dox tags for information, see: 
               //-  * https://github.com/tj/dox#tags
               //-  * https://code.google.com/p/jsdoc-toolkit/wiki/TagReference
