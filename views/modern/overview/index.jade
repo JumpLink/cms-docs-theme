@@ -113,9 +113,12 @@
               span(ng-switch-when="version")
             //- Onlx show code block if it is set
             span(ng-if="docDesc.code && $root.code")
-              //- with syntax highlighting on client
-              div(ng-if="$root.highlight", hljs, language="javascript", source="docDesc.code")
-              //- without syntax highlighting
-              pre(ng-if="!$root.highlight")
-                //- same class like the highlighting stuff for uniform appearance
-                code.hljs.kotlin.javascript {{docDesc.code}}
+              span(ng-if="!$root.renderHighlightOnServer")
+                //- with syntax highlighting on client
+                div(ng-if="$root.highlight", hljs, language="javascript", source="docDesc.code")
+                //- without syntax highlighting
+                pre(ng-if="!$root.highlight")
+                  //- same class like the highlighting stuff for uniform appearance
+                  code.hljs.kotlin.javascript {{docDesc.code}}
+              span(ng-if="$root.renderHighlightOnServer")
+                pre: code.hljs.kotlin.javascript(ng-bind-html="docDesc.code")

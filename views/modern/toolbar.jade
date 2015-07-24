@@ -12,7 +12,7 @@
         a(ui-sref='layout.overview') Overview
     .navbar-right(style="padding-right:8px")
       toggle-switch(ng-init="$root.code = true", title="switch show code to {{!$root.code}}" ng-model="$root.code", data-html="true", knob-label="<i class='fa fa-code'></i>", style="margin-right:8px")
-      toggle-switch(ng-init="$root.highlight = false", title="switch syntax highlighting to {{!$root.highlight}}", is-disabled="!$root.code", ng-model="$root.highlight", data-html="true", knob-label="<i class='fa fa-paint-brush'></i>")
+      toggle-switch(ng-init="$root.highlight = false; $root.renderHighlightOnServer = true;", ng-if="!$root.renderHighlightOnServer", title="switch syntax highlighting to {{!$root.highlight}}", is-disabled="!$root.code", ng-model="$root.highlight", data-html="true", knob-label="<i class='fa fa-paint-brush'></i>")
       button.btn.btn-primary.navbar-btn(ng-if="$root.fullscreenIsSupported", ng-click="toggleFullscreen()", style="font-size: 14px; margin-left: 15px;")
         i.fa.fa-expand(ng-hide="isFullscreen", title="Vollbild")
         i.fa.fa-compress(ng-show="isFullscreen", title="Vollbild verlassen")
