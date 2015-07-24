@@ -113,7 +113,7 @@
               span(ng-switch-when="version")
             //- Onlx show code block if it is set
             span(ng-if="docDesc.code && $root.code")
-              //- with syntax highlighting
+              //- with syntax highlighting on client
               div(ng-if="$root.highlight", hljs, language="javascript", source="docDesc.code")
               //- without syntax highlighting
               pre(ng-if="!$root.highlight")
