@@ -10,8 +10,9 @@ block body
       .col-md-10
         h1.page-header Overview
         each docsFolder in docs
-          h2.anchor-static-navbar(id="#{docsFolder.name}")
-          h2.page-header #{docsFolder.name}
+          if docsFolder.docs.length > 0
+            h2.anchor-static-navbar(id="#{docsFolder.name}")
+            h2.page-header #{docsFolder.name}
           each doc in docsFolder.docs
             h2.anchor-static-navbar(id="#{docsFolder.name+'_'+doc.name}")
             h3 #{doc.name}

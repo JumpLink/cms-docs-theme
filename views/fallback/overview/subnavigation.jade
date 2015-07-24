@@ -1,9 +1,10 @@
 .bs-sidebar(hidden-print, role="complementary")
   ul.nav.bs-sidenav
     each docsFolder in docs
-      li
-        a(href="\##{docsFolder.name}") #{docsFolder.name}
-        ul.nav(style="display: block;")
-          each doc in docsFolder.docs
-            li
-              a(href="\##{docsFolder.name+'_'+doc.name}") #{doc.name}
+      if docsFolder.docs.length > 0
+        li
+          a(href="\##{docsFolder.name}") #{docsFolder.name}
+          ul.nav(style="display: block;")
+            each doc in docsFolder.docs
+              li
+                a(href="\##{docsFolder.name+'_'+doc.name}") #{doc.name}
