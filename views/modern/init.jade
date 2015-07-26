@@ -4,6 +4,7 @@ html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$
     base(href="/")
     title jumplink CMS Documentation
     //- favicons generated with http://www.favicon-generator.org/
+    //- own service for this
     link(rel="apple-touch-icon" sizes="57x57" href="/assets/favicons/apple-icon-57x57.png")
     link(rel="apple-touch-icon" sizes="60x60" href="/assets/favicons/apple-icon-60x60.png")
     link(rel="apple-touch-icon" sizes="72x72" href="/assets/favicons/apple-icon-72x72.png")
@@ -37,8 +38,10 @@ html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$
     script(type="text/ng-template", id="footer"): include ./footer.jade
     script(type="text/ng-template", id="sidebar"): include ./sidebar.jade
     script(type="text/ng-template", id="adminbar"): include ./adminbar.jade
-    //- overwiew
-    script(type="text/ng-template", id="overview/index"): include ./overview/index.jade
+    //- backend
+    script(type="text/ng-template", id="backend/index"): include ./backend/index.jade
+    //- getting start
+    script(type="text/ng-template", id="start/index"): include ./start/index.jade
     //- CMS
     script(type="text/ng-template", id="cms/index"): include ./cms/index.jade
   body(ng-class="bodyclass")

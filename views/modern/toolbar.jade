@@ -3,13 +3,15 @@
     .navbar-header
       button.btn.btn-primary.navbar-btn.navbar-left.hidden-lg.hidden-md(type="button", bs-aside="aside", data-template="sidebar", data-title="Menü", data-placement="left", data-animation="am-slide-left", data-container=".main-body", style="font-size: 14px; margin-left: 15px; margin-right: 15px;")
         i.fa.fa-bars
-      a.navbar-brand(ui-sref='layout.overview')
+      a.navbar-brand(ui-sref='layout.start')
         img(src="/assets/images/logo_small.svg", style="height: 40px;margin-top:-10px;float:left;padding-right:5px;")
         span.hidden-xs.hidden-md.hidden-lg JumpLink CMS Dokumentation
         span.hidden-sm.hidden-md.hidden-lg 
     ul.nav.navbar-nav.navbar-left.visible-md-block.hidden-xs.hidden-sm.visible-lg-block
-      li(data-match-route='/*overview*')
-        a(ui-sref='layout.overview') Overview
+      li(data-match-route='/*start*')
+        a(ui-sref='layout.start') Getting started
+      li(data-match-route='/*backend*')
+        a(ui-sref='layout.backend') Backend Docs
     .navbar-right(style="padding-right:8px")
       toggle-switch(ng-init="$root.code = true", title="switch show code to {{!$root.code}}" ng-model="$root.code", data-html="true", knob-label="<i class='fa fa-code'></i>", style="margin-right:8px")
       toggle-switch(ng-init="$root.highlight = false; $root.renderHighlightOnServer = true;", ng-if="!$root.renderHighlightOnServer", title="switch syntax highlighting to {{!$root.highlight}}", is-disabled="!$root.code", ng-model="$root.highlight", data-html="true", knob-label="<i class='fa fa-paint-brush'></i>")

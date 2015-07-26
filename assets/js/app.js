@@ -107,7 +107,7 @@ jumplink.cms.config( function($stateProvider, $urlRouterProvider, $locationProvi
   // use the HTML5 History API
   $locationProvider.html5Mode(false);
 
-  $urlRouterProvider.otherwise('/overview');
+  $urlRouterProvider.otherwise('/start');
 
   $stateProvider
   // LAYOUT
@@ -116,9 +116,35 @@ jumplink.cms.config( function($stateProvider, $urlRouterProvider, $locationProvi
     , templateUrl: "layout"
     , controller: 'LayoutController'
   })
-  // HOME
-  .state('layout.overview', {
-    url: '/overview'
+  // Getting started 
+  .state('layout.start', {
+    url: '/start'
+    , resolve:{
+      start: function(MarkdownService) {
+        return MarkdownService.resolve('GettingStarted.md');
+      },
+      cms: function(CmsService, $log) {
+        return CmsService.infoUser();
+      },
+    }
+    , views: {
+      'content' : {
+        templateUrl: 'start/index'
+        , controller: 'DocsStartController'
+      }
+      , 'toolbar' : {
+        templateUrl: 'toolbar'
+        , controller: 'ToolbarController'
+      }
+      , 'footer' : {
+        templateUrl: 'footer'
+        , controller: 'FooterController'
+      }
+    }
+  })
+  // backend
+  .state('layout.backend', {
+    url: '/backend'
     , resolve:{
       docs: function(DocsService) {
         return DocsService.resolve('all');
@@ -129,8 +155,8 @@ jumplink.cms.config( function($stateProvider, $urlRouterProvider, $locationProvi
     }
     , views: {
       'content' : {
-        templateUrl: 'overview/index'
-        , controller: 'DocsOverviewController'
+        templateUrl: 'backend/index'
+        , controller: 'DocsBackendController'
       }
       , 'toolbar' : {
         templateUrl: 'toolbar'

@@ -1,0 +1,10 @@
+extends ../layout.jade
+block body
+  include ../toolbar.jade
+  .container-fluid(style="min-height: 400px;")
+    .row
+      .col-md-2.hidden-sm.hidden-xs
+        //- include ../subnavigation.jade
+      .col-md-10
+        div!= start
+  include ../footer.jade
