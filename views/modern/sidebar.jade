@@ -6,5 +6,7 @@
         h4.aside-title(ng-bind='title')
       .aside-body.bs-sidebar(bs-navbar)
         ul.nav.bs-sidenav
-          li(data-match-route='/*overview*')
-            a(ui-sref='layout.overview') Overview
+          li(data-match-route='/*start*')
+            a(ui-sref='layout.start') Getting started
+          li(data-match-route='/*backend*')
+            a(ui-sref='layout.backend') Backend Docs
