@@ -1,5 +1,5 @@
 doctype html
-html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$root.authenticated = #{authenticated}; $root.user = #{user}; $root.debug = false")
+html(lang="en", ng-app="jumplink.cms", ng-controller="AppController")
   head
     base(href="/")
     title jumplink CMS Documentation
@@ -32,20 +32,6 @@ html(lang="en", ng-app="jumplink.cms", ng-controller="AppController", ng-init="$
         meta(http-equiv="refresh" content="0; url="+url+"?force=noscript")
     //- Stylesheets
     link(href='/assets/styles/app.css', rel='stylesheet')
-
-    //- Templates
-    //- general
-    script(type="text/ng-template", id="layout"): include ./layout.jade
-    script(type="text/ng-template", id="toolbar"): include ./toolbar.jade
-    script(type="text/ng-template", id="footer"): include ./footer.jade
-    script(type="text/ng-template", id="sidebar"): include ./sidebar.jade
-    script(type="text/ng-template", id="adminbar"): include ./adminbar.jade
-    //- backend
-    script(type="text/ng-template", id="backend/index"): include ./backend/index.jade
-    //- getting start
-    script(type="text/ng-template", id="start/index"): include ./start/index.jade
-    //- CMS
-    script(type="text/ng-template", id="cms/index"): include ./cms/index.jade
   body(ng-class="bodyclass")
     //- Include local variables injected from server
     include ./variables.jade

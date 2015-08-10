@@ -8,5 +8,48 @@
   "description": "The default dokumentation theme for JumpLink CMS",
   "image": "assets/images/preview.png",
   "modernview": "views/modern/init.jade",
-  "license": "MIT"
+  "license": "MIT",
+  "setup": {
+    "users": [
+      {
+        "email":"admin@docs.jumplink.eu",
+        "name": "admin",
+        "color": "#000000",
+        "password": "docs-admin",
+        "role": "siteadmin"
+      }
+    ],
+    "routes": [
+      {
+        "position": 1,
+        "match": "/*start*",
+        "title": "Getting started",
+        "state": {
+          "name": "layout.start",
+          "customstate": false,
+          "url": "",
+          "views": "",
+          "resolve": ""
+        },
+        "fallback": { 
+          "url": ""
+        }
+      },
+      {
+        "position": 2,
+        "match": "/*backend*",
+        "title": "Backend Docs",
+        "state": {
+          "name": "layout.backend",
+          "customstate": false,
+          "url": "",
+          "views": "",
+          "resolve": ""
+        },
+        "fallback": { 
+          "url": ""
+        }
+      }
+    ]
+  }
 }
