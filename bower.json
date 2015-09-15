@@ -44,6 +44,7 @@
     "async": "~0.9.2",
     "bootstrap": "~3.3.4",
     "bootstrap-additions": "JumpLink/bootstrap-additions#master",
+    "font-awesome": "~4.4.0",
     "highlightjs": "~8.7.0",
     "js-beautify": "~1.5.5",
     "jumplink-cms-angular": "JumpLink/cms-angular#master",
