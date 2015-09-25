@@ -2,17 +2,43 @@ var validator = require('validator');
 var moment = require('moment');
 moment.locale('de');
 
-var updateBrowser = function (req, res, next, force) {
-  return ThemeService.view(req.session.uri.host, 'views/fallback/browser.jade', res, {
-    force: force,
-    host: req.host,
-    url: req.path,
-    useragent: req.useragent,
-    title: 'Ihr Browser wird nicht unterstützt'
+var updateBrowser = function (req, res, next, force, showLegacyToast, page, route) {
+  var routes = null;
+  var host = req.session.uri.host;
+  var site = null;
+  var url = req.path;
+  var title = "";
+  if(UtilityService.isDefined(route) && UtilityService.isDefined(route.sitetitle)) title = route.sitetitle;
+  MultisiteService.getCurrentSiteConfig(host, function (err, config) {
+    if(err) return res.serverError(err);
+    site = config.name;
+    async.parallel([
+      function(callback) {
+        RoutesService.find(host, {}, function(err, routes) {
+          callback(err, routes);
+        });
+      }
+    ], function (err, results) {
+      if(err) return res.serverError(err);
+      routes = results[0];
+      return ThemeService.view(req.session.uri.host, 'views/fallback/browser.jade', res, {
+        showLegacyToast: showLegacyToast,
+        force: force,
+        host: host,
+        url: url,
+        routes: routes,
+        useragent: req.useragent,
+        title: title,
+        config: {paths: sails.config.paths},
+        isFallback: true,
+        isModern: false,
+        authenticated: false
+      });
+    });
   });
 };
 
-var fallbackBackend = function (req, res, next, force, showLegacyToast) {
+var fallbackBackend = function (req, res, next, force, showLegacyToast, page, route) {
   sails.log.debug("fallbackBackend");
   var page = 'layout.backend';
   MultisiteService.getCurrentSiteConfig(req.session.uri.host, function (err, config) {
@@ -37,9 +63,9 @@ var fallbackBackend = function (req, res, next, force, showLegacyToast) {
   });
 };
 
-var fallbackStart = function (req, res, next, force, showLegacyToast) {
+var fallbackStart = function (req, res, next, force, showLegacyToast, page, route) {
   var links = null;
-  var options
+  var options;
   MultisiteService.getCurrentSiteConfig(req.session.uri.host, function (err, config) {
     if(err) { return res.serverError(err); }
     var options = {
@@ -65,7 +91,7 @@ var fallbackStart = function (req, res, next, force, showLegacyToast) {
   });
 }
 
-var fallbackCms = function (req, res, next, force, showLegacyToast) {
+var fallbackCms = function (req, res, next, force, showLegacyToast, page, route) {
   var links = null;
   MultisiteService.getCurrentSiteConfig(req.session.uri.host, function (err, config) {
     if(err) { return res.serverError(err); }
@@ -85,73 +111,31 @@ var fallbackCms = function (req, res, next, force, showLegacyToast) {
   });
 };
 
-var fallback = function (req, res, next, force) {
-
-  var ok = function (req, res, next, force) {
-    switch(req.path) {
-      case "/fallback/browser":
-        return updateBrowser(req, res, next, force, showLegacyToast = false);
-      case "/fallback/start":
-        return fallbackStart(req, res, next, force, showLegacyToast = true);
-      case "/fallback/backend":
-        return fallbackBackend(req, res, next, force, showLegacyToast = true);
-      case "/fallback/cms":
-        return fallbackCms(req, res, next, force, showLegacyToast = true);
-      default:
-        return fallbackBackend(req, res, next, force, showLegacyToast = true);
-    }
-  }
-
-  // var force = null; // modern | fallback
-  if(req.param('force'))
-    force = req.param('force');
-  if(req.query.force)
-    force = req.query.force;
-
-  // sails.log.debug('force', force);
-
-  if(UseragentService.isModern(req, force)) {
-    if(force != null && typeof force != 'undefined')
-      return res.redirect('/?force='+force);
-    else
-      return res.redirect('/');
-  } else {
-    return ok(req, res, next, force);
+var fallback = function (req, res, next, forceParam, route) {
+  var url = req.path;
+  var page = null;
+  if(UtilityService.isDefined(route) && UtilityService.isDefined(route.state) && UtilityService.isDefined(route.state.name)) page = route.state.name;
+  switch(req.path) {
+    case "/fallback/browser":
+      return updateBrowser(req, res, next, forceParam, showLegacyToast = true, page, route);
+    case "/fallback/start":
+      return fallbackStart(req, res, next, forceParam, showLegacyToast = true, page, route);
+    case "/fallback/backend":
+      return fallbackBackend(req, res, next, forceParam, showLegacyToast = true, page, route);
+    case "/fallback/cms":
+      return fallbackCms(req, res, next, forceParam, showLegacyToast = true, page, route);
+    default:
+      return fallbackBackend(req, res, next, forceParam, showLegacyToast = true, page, route);
   }
 }
 
-  /*
-   * fallback html page to allow browser to auto-fill e-mail and password
-   */
-var signin = function(req, res, next) {
-
-  sails.log('signin(req, res, next)');
-
-  var ok = function () {
-    // TODO use toast for flash
-    return ThemeService.view(req.session.uri.host, 'views/fallback/signin.jade', res,  { showLegacyToast: false, flash: req.session.flash });
-  }
-
-  var force = null; // modern | fallback
-
-  if(req.param('force'))
-    force = req.param('force');
-
-  if(req.query.force)
-    force = req.query.force;
-
-  // sails.log.debug('force', force);
-
-  if((UseragentService.supported(req) || force == 'modern') && (force != 'fallback' && force != 'noscript')) {
-    return ok(req, res, next);
-  } else {
-    if(force != null)
-      return res.redirect('/fallback/home?force='+force);
-    else
-      return res.redirect('/fallback/home');
-  }
-
+/*
+ * fallback html page to allow browser to auto-fill e-mail and password
+ */
+var signin = function(req, res, next, force, showLegacyToast, page, route) {
+  return ThemeService.view(host, 'views/fallback/signin.jade', res,  { showLegacyToast: false, flash: flash });
 }
+
 
 module.exports = {
   updateBrowser: updateBrowser
