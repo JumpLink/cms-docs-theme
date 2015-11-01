@@ -1,4 +1,4 @@
-jumplink.cms.service('DocsService', function ($rootScope, $log, $sailsSocket, $filter, UtilityService) {
+docs.service('DocsService', function ($rootScope, $log, $sailsSocket, $filter, UtilityService) {
 
   var resolve = function(name, cb, next) {
     var errors = [

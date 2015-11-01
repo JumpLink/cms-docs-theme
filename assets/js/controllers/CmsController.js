@@ -1,4 +1,4 @@
-jumplink.cms.controller('CmsController', function($rootScope, $scope, info, $location, $anchorScroll, $state, $log) {
+docs.controller('CmsController', function($rootScope, $scope, info, $location, $anchorScroll, $state, $log) {
   var page = $state.current.name;
   $scope.info = info;
 

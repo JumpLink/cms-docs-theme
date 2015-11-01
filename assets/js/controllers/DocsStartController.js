@@ -1,4 +1,4 @@
-jumplink.cms.controller('DocsStartController', function($scope, start, $state, $log, HistoryService) {
+docs.controller('DocsStartController', function($scope, start, $state, $log, HistoryService) {
   var page = $state.current.name;
 
   $scope.start = start;

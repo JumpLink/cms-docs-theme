@@ -1,4 +1,4 @@
-jumplink.cms.controller('LayoutController', function($scope) {
+docs.controller('LayoutController', function($scope) {
 
 
 });

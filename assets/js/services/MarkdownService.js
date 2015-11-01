@@ -1,4 +1,4 @@
-jumplink.cms.service('MarkdownService', function ($rootScope, $log, $sailsSocket, $filter, UtilityService) {
+docs.service('MarkdownService', function ($rootScope, $log, $sailsSocket, $filter, UtilityService) {
 
   var resolve = function(filepath, cb, next) {
     var errors = [

@@ -1,1 +1,12 @@
-include ../../assets/third-party/jumplink-cms-angular/src/sidebar/sidebar.bootstrap.jade
+.aside(tabindex='-1', role='dialog')
+  .aside-dialog
+    .aside-content
+      .aside-header(ng-show='title')
+        button.close(type='button', ng-click='$hide()') ×
+        h4.aside-title(ng-bind='title')
+      .aside-body.bs-sidebar(bs-navbar)
+        ul.nav.bs-sidenav
+          li(data-match-route='/*start*')
+            a(ui-sref='layout.start') Getting started
+          li(data-match-route='/*backend*')
+            a(ui-sref='layout.backend') Backend Docs

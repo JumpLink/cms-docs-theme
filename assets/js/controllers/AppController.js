@@ -1,4 +1,4 @@
-jumplink.cms.controller('AppController', function($rootScope, $scope, $state, $window, $timeout, Fullscreen, toaster, $sailsSocket, $location, HistoryService, $log) {
+docs.controller('AppController', function($rootScope, $scope, $state, $window, $timeout, Fullscreen, toaster, $sailsSocket, $location, HistoryService, $log) {
 
   // fix scroll to top on route change
   $scope.$on("$stateChangeSuccess", function () {

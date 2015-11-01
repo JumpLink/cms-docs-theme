@@ -1,3 +1,3 @@
-jumplink.cms.controller('FooterController', function($scope, cms) {
+docs.controller('FooterController', function($scope, cms) {
   $scope.cms = cms;
 });
