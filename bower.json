@@ -50,7 +50,9 @@
     "angular-bootstrap-toggle-switch": "~0.5.5",
     "angular-carousel": "~1.0.1",
     "angular-highlightjs": "~0.4.3",
-    "jumplink-cms-angular": "jumplink/cms-angular#~0.0.2"
+    "jumplink-cms-angular": "jumplink/cms-angular#~0.0.2",
+    "font-awesome": "~4.4.0",
+    "highlightjs": "~8.8.0"
   },
   "resolutions": {
     "angular": "~1.4.7"
