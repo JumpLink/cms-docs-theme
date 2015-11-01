@@ -6,12 +6,8 @@ img(src="/assets/images/footer.png", width="100%", height="auto")
         img.img-responsive.center-block(src="/assets/images/logo.svg")
       .col-sm-6
         dl.dl-horizontal
-          dt Web
-          dd: a(href="http://jumplink.eu") jumplink.eu
           dt Version
           dd v{{cms.version}}
-          dt Technik &amp; Design
-          dd: a(href="mailto:pascal@jumplink.eu") Pascal Garber
           dt Runtime
           dd {{cms.runtime.title}} {{cms.runtime.version}}
           dt License
@@ -20,8 +16,3 @@ img(src="/assets/images/footer.png", width="100%", height="auto")
           dd {{cms.config.environment}}
           dt Port
           dd {{cms.config.port}}
-          dl.dl-horizontal
-            dt: | Extras
-            dd(ng-hide="$root.authenticated"): a(href="/signin") Administration anmelden
-            dd(ng-show="$root.authenticated"): a(ng-click="logout()") Administration abmelden
-            dd: a(href="/?force=legacy") Kompatibilitätsmodus erzwingen
