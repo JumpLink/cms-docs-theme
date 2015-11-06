@@ -109,6 +109,32 @@ docs.config( function($stateProvider, $urlRouterProvider, $locationProvider, $pr
       }
     }
   })
+  // angular
+  .state('layout.angular', {
+    url: '/angular',
+    resolve:{
+      docs: function(DocsService) {
+        return DocsService.resolve('allAngular');
+      },
+      cms: function(CmsService, $log) {
+        return CmsService.infoUser();
+      },
+    },
+    views: {
+      'content' : {
+        templateUrl: 'angular/index',
+        controller: 'DocsAngularController'
+      },
+      'toolbar' : {
+        templateUrl: 'toolbar',
+        controller: 'ToolbarController'
+      },
+      'footer' : {
+        templateUrl: 'footer',
+        controller: 'FooterController'
+      }
+    }
+  })
   // cms
   .state('layout.cms', {
     url: '/cms',
